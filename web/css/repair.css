@@ -1,0 +1,85 @@
+html {margin: 0;padding: 0;border: 0;}
+body {
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+}
+button {
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+    width: 100px;
+}
+input {
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+    width: 150px; 
+}
+select {
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+    width: 155px; 
+}
+textarea {
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+    width: 350px;
+    height: 40px;    
+}
+.container {
+    width: 740px;
+    /*height: 350px;*/
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #333333;
+    margin-top: 2px;
+}
+.containerHeader {
+    width: 740px;
+    height: 30px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #333333;
+}
+.BranchLeft {
+    font-family: 'MS Sans Serif';
+    font-size: 16px;
+    font-weight: bold;
+    /*color: orangered;*/
+    float:left; 
+}
+.logOutInputSize {
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+    float:right; 
+}
+.classCTS {
+    font-family: 'MS Sans Serif';
+    font-size: 14px;    
+}
+.help-block {
+    color: red;
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+    margin-top: 2px;
+}
+.repairError {
+    color: red;
+    font-family: 'MS Sans Serif';
+    font-size: 14px;    
+}
+table{
+    width: 100%;
+    margin-top: 10px;
+}
+.classTr {
+    border: 1px solid black;
+    background-color: darkgray;
+}
+a:link {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:visited {
+    text-decoration: none;
+}

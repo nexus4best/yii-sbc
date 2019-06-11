@@ -1,0 +1,65 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
+
+
+class TblRepair extends \yii\db\ActiveRecord
+{
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+
+    public static function tableName()
+    {
+        return 'tbl_repair';
+    }
+
+    public function rules()
+    {
+        return [
+            //computer
+            [
+                ['BrnBrand','BrnModel','BrnSerial','BrnPos','BrnCause'], 
+                    'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'computer'
+            ],
+
+            [['created_at ', 'updated_at '], 'safe'],
+            [['BrnStatus'], 'integer'],
+            [['BrnCode'], 'string', 'max' => 10],
+            [['BrnRepair'], 'string', 'max' => 100],
+            [['BrnPos'], 'string', 'max' => 50],
+            [['BrnCause'], 'string', 'max' => 255],
+            [['BrnBrand', 'BrnModel', 'BrnSerial', 'BrnUserCreate'], 'string', 'max' => 150],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'เลขที่',
+            'BrnCode' => 'Brn Code',
+            'BrnStatus' => 'สถานะ',
+            'BrnRepair' => 'รายการ',
+            'BrnPos' => 'เครื่อง',
+            'BrnBrand' => 'ยี่ห้อ',
+            'BrnModel' => 'รุ่น',
+            'BrnSerial' => 'หมายเลข',
+            'BrnCause' => 'สาเหตุ',
+            'BrnUserCreate' => 'ผู้จัดทำ',
+            'created_at ' => 'วันที่สร้าง',
+            'updated_at ' => 'Updated At',
+        ];
+    }
+}

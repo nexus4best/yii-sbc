@@ -1,0 +1,146 @@
+<?php
+
+namespace app\controllers;
+
+use Yii;
+use app\models\TblRepair;
+use app\models\TblRepairSearch;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\web\Session;
+
+class RepairController extends Controller
+{
+
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    public function init()
+    {
+        $session = Yii::$app->session;
+        if(empty($session->get('UserBranch'))) {
+            $this->redirect('index.php?r=login');
+        }
+    }
+
+    public function actionIndex()
+    {
+        $this->layout = 'mainRepair';
+        
+        $searchModel = new TblRepairSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    //เลือกรายการแจ้งซ่อม
+    public function actionChoice()
+    {
+        $this->layout = 'mainRepair';
+        if(Yii::$app->request->post()) {
+            if (empty($_POST['brn_repair'])) {
+                \Yii::$app->getSession()->setFlash('repairError', 'โปรดเลือกรายการแจ้งซ่อม');
+                return $this->render('_form_choice');
+            } elseif ($_POST['brn_repair'] == 'computer') {
+                return $this->redirect(array('computer'));
+            }
+        } else {
+            return $this->render('_form_choice');
+        }
+    }
+
+    public function actionComputer()
+    {
+        $this->layout = 'mainRepair';
+        $model = new TblRepair();
+        $model->scenario = 'computer';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+
+                $model->BrnCode = "S115";
+                $model->BrnStatus = "แจ้งซ่อม";
+                $model->BrnRepair = "คอมพิวเตอร์";
+                $model->BrnBrand = "คอมพิวเตอร์";
+                $model->BrnModel = "คอมพิวเตอร์";
+                $model->BrnSerial = "คอมพิวเตอร์";
+                $model->BrnCause = "คอมพิวเตอร์";
+                $model->BrnPos = "C01";
+                $model->BrnUserCreate = "ธานี คำสิงห์";
+                $model->save();
+
+            \Yii::$app->getSession()->setFlash('saveRepairOk', 'บันทึกข้อมูลเรียบร้อย');
+            return $this->redirect('index.php?r=repair/index');
+        } else {
+            return $this->render('computer', [
+                'model' => $model,
+                'title' => 'คอมพิวเตอร์'
+            ]);
+        }
+        
+        
+    }
+
+    
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionCreate()
+    {
+        $model = new TblRepair();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = TblRepair::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+}

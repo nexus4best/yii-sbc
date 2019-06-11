@@ -1,0 +1,35 @@
+html {margin: 0;padding: 0;border: 0;}
+body {
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+}
+.container {
+    width: 720px;
+    height: 370px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #333333;
+}
+.loginHeader {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+}
+.loginInput {
+    margin-top: 50px;
+    text-align: center;
+    width: 720px;
+    /*border: 1px solid #333333;*/
+}
+.loginInputSize {
+    width: 100px;
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+}
+.loginError {
+    color: red;
+    font-family: 'MS Sans Serif';
+    font-size: 14px;
+    width: 720px;
+    text-align: center;
+}
