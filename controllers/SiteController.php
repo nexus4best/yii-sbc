@@ -43,6 +43,8 @@ class SiteController extends Controller
      */
     public function actions()
     {
+        $this->layout = 'mainRepair';
+        
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',

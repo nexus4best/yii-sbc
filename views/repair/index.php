@@ -28,7 +28,7 @@ $this->title = 'หน้าหลัก-ใบแจ้งซ่อม';
         <?php
 
             foreach ($model as $key => $value) {
-                echo '<tr><td><a href="view?id='.$value->id.'">'.$value->id.'</a></td>';
+                echo '<tr><td><a href="view/'.$value->id.'">'.$value->id.'</a></td>';
                 if($value->BrnStatus == 'แจ้งซ่อม'){
                     echo '<td><span style="color:red">'.$value->BrnStatus.'</span>'.'</td>';
                 }

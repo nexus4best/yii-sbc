@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\web\Session;
+use app\models\tbl_zone;
 
 /* branch create repair
  * @property int $id
@@ -80,6 +81,62 @@ class tbl_repair extends \yii\db\ActiveRecord
                     ->where(['BrnCode' => Yii::$app->session->get('UserBranch')])
                     ->all();
         return $model;
+    }
+
+    public function sendMail($pos,$repair)
+    {
+        $area = tbl_zone::find()->where(['BrnCode' => Yii::$app->session->get('UserBranch')])->one();
+        $mail_area = 'area'.$area->AreaId.'_sbc@se-ed.com';
+
+        if($pos == 'CCTV' || $pos == 'ADSL'){
+            $mail_to = 'helpdesk@se-ed.com';
+        }else{
+            $mail_to = 'cts_sbc@se-ed.com';
+        }
+
+        $mail_subject = Yii::$app->session->get('UserBranch').' '.$pos.' '.$repair;
+
+        Yii::$app->mailer->compose('@app/mail/layouts/repair_create',[
+            'fullname' => 'แจ้งซ่อม ONLINE'
+        ])
+        ->setFrom([
+            'repairing@se-ed.com' => 'แจ้งซ่อม ONLINE'
+        ])
+        ->setTo(array($mail_to,$mail_area))
+        ->setSubject($mail_subject)
+        ->send();
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        if($insert){
+
+            $session = Yii::$app->session;
+            $session->set('id', $this->id);
+            $session->set('BrnRepair', $this->BrnRepair);
+            $session->set('BrnBrand', $this->BrnBrand);
+            $session->set('BrnModel', $this->BrnModel);            
+            $session->set('BrnSerial', $this->BrnSerial);
+            $session->set('BrnCause', $this->BrnCause);            
+            $session->set('BrnPos', $this->BrnPos);
+            $session->set('BrnUserCreate', $this->BrnUserCreate);            
+
+            \Yii::$app->getSession()->setFlash('saveRepairOk', 'บันทึกข้อมูลแจ้งซ่อม '.$this->BrnRepair.' เรียบร้อย');
+            
+            $pos = $this->BrnPos;
+            $repair = $this->BrnRepair;
+            
+            $this->sendMail($pos,$repair);
+        }
+        /*
+        else {
+            //update
+            if(this->status_id != $changedAttributes['status_id']){
+                // field status change
+            }
+        }
+        */
     }
 
 }

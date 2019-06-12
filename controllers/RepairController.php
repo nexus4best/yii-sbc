@@ -32,20 +32,6 @@ class RepairController extends Controller
             $this->redirect('/login/logout');
         }
     }
-    
-    /* */
-    public function sendMail()
-    {
-        Yii::$app->mailer->compose('@app/mail/layouts/repair_create',[
-            'fullname' => 'แจ้งซ่อม ONLINE'
-        ])
-        ->setFrom([
-            'repairing@se-ed.com' => 'แจ้งซ่อม ONLINE'
-        ])
-        ->setTo('thanee@se-ed.com')
-        ->setSubject('TEST EMAIL KRUB')
-        ->send();
-    }
 
     /* หน้าแรก แสดงรายการแจ้งซ่อม */
     public function actionIndex()
@@ -55,6 +41,14 @@ class RepairController extends Controller
 
         return $this->render('index', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionView($id)
+    {
+        $this->layout = 'mainRepair';
+        return $this->render('view', [
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -89,12 +83,9 @@ class RepairController extends Controller
             if(strlen($model->BrnPos) == 8){
                 $model->BrnPos = substr($model->BrnPos,5,3);
             }
+
             $model->save();
             
-            /* Send Mail */
-            $this->sendMail();
-
-            \Yii::$app->getSession()->setFlash('saveRepairOk', 'บันทึกข้อมูลเรียบร้อย');
             return $this->redirect('index');
         } else {
             return $this->render('computer', [
@@ -105,13 +96,7 @@ class RepairController extends Controller
                     
     }
 
-    public function actionView($id)
-    {
-        $this->layout = 'mainRepair';
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+
 
     public function actionCreate()
     {
