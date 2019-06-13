@@ -6,29 +6,29 @@ use yii\helpers\ArrayHelper;
 
 $session = Yii::$app->session;
 $CshDatabaseServerAlone = $session->get('CshDatabaseServerAlone');
-$CshDatabaseServerAlone += ["CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
-//$CshDatabaseServerAlone += [ "ADSL" => "ADSL", "CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
+//$CshDatabaseServerAlone += ["BackOffice" => "BackOffice" ];
+$CshDatabaseServerAlone += [ "ADSL" => "ADSL", "CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
 
-$this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
+$this->title = 'แจ้งซ่อม-รายการอื่นๆ';
 
 ?>
 <div class="container">
-    <div class="tbl-repair-computer">
+    <div class="tbl-repair-other">
 
         <?php $form = ActiveForm::begin(); ?>
 
             <table cellspacing="5" cellpadding="5">
                 <tr>
-                    <td>แจ้งซ่อม</td>
+                    <td>แจ้งซ่อม <span style="color:red">*</span></td>
                     <td>
                         <?= $form->field($model, 'BrnRepair')
-                            ->textInput(['value' => $title, 'readonly' => 'readonly', 'style' => 'background:#FFFF88'])
+                            ->textInput()
                             ->label(false) 
                         ?>
                     </td>
-                </tr>
+                </tr>  
                 <tr>
-                    <td>ยี่ห้อ <span style="color:red">*</span></td>
+                    <td>ยี่ห้อ</td>
                     <td>
                         <?= $form->field($model, 'BrnBrand')
                             ->textInput()
@@ -46,7 +46,7 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                     </td>
                 </tr> 
                 <tr>
-                    <td>หมายเลข <span style="color:red">*</span></td>
+                    <td>หมายเลข</span></td>
                     <td>
                         <?= $form->field($model, 'BrnSerial')
                             ->textInput()
@@ -62,7 +62,7 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                             ->label(false);
                         ?>
                     </td>
-                </tr>   
+                </tr>
                 <tr>
                     <td>สาเหตุ <span style="color:red">*</span></td>
                     <td>

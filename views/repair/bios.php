@@ -6,14 +6,14 @@ use yii\helpers\ArrayHelper;
 
 $session = Yii::$app->session;
 $CshDatabaseServerAlone = $session->get('CshDatabaseServerAlone');
-$CshDatabaseServerAlone += ["CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
+$CshDatabaseServerAlone += ["BackOffice" => "BackOffice" ];
 //$CshDatabaseServerAlone += [ "ADSL" => "ADSL", "CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
 
-$this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
+$this->title = 'แจ้งซ่อม-แบตเตอรี่ เมนบอร์ด';
 
 ?>
 <div class="container">
-    <div class="tbl-repair-computer">
+    <div class="tbl-repair-bios">
 
         <?php $form = ActiveForm::begin(); ?>
 
@@ -23,33 +23,6 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                     <td>
                         <?= $form->field($model, 'BrnRepair')
                             ->textInput(['value' => $title, 'readonly' => 'readonly', 'style' => 'background:#FFFF88'])
-                            ->label(false) 
-                        ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>ยี่ห้อ <span style="color:red">*</span></td>
-                    <td>
-                        <?= $form->field($model, 'BrnBrand')
-                            ->textInput()
-                            ->label(false) 
-                        ?>
-                    </td>
-                </tr>   
-                <tr>
-                    <td>รุ่น</td>
-                    <td>
-                        <?= $form->field($model, 'BrnModel')
-                            ->textInput()
-                            ->label(false) 
-                        ?>
-                    </td>
-                </tr> 
-                <tr>
-                    <td>หมายเลข <span style="color:red">*</span></td>
-                    <td>
-                        <?= $form->field($model, 'BrnSerial')
-                            ->textInput()
                             ->label(false) 
                         ?>
                     </td>

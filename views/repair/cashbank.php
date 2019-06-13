@@ -6,14 +6,14 @@ use yii\helpers\ArrayHelper;
 
 $session = Yii::$app->session;
 $CshDatabaseServerAlone = $session->get('CshDatabaseServerAlone');
-$CshDatabaseServerAlone += ["CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
+//$CshDatabaseServerAlone += ["BackOffice" => "BackOffice" ];
 //$CshDatabaseServerAlone += [ "ADSL" => "ADSL", "CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
 
-$this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
+$this->title = 'แจ้งซ่อม-ที่หนีบธนบัตร';
 
 ?>
 <div class="container">
-    <div class="tbl-repair-computer">
+    <div class="tbl-repair-cashbank">
 
         <?php $form = ActiveForm::begin(); ?>
 
@@ -28,33 +28,6 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                     </td>
                 </tr>
                 <tr>
-                    <td>ยี่ห้อ <span style="color:red">*</span></td>
-                    <td>
-                        <?= $form->field($model, 'BrnBrand')
-                            ->textInput()
-                            ->label(false) 
-                        ?>
-                    </td>
-                </tr>   
-                <tr>
-                    <td>รุ่น</td>
-                    <td>
-                        <?= $form->field($model, 'BrnModel')
-                            ->textInput()
-                            ->label(false) 
-                        ?>
-                    </td>
-                </tr> 
-                <tr>
-                    <td>หมายเลข <span style="color:red">*</span></td>
-                    <td>
-                        <?= $form->field($model, 'BrnSerial')
-                            ->textInput()
-                            ->label(false) 
-                        ?>
-                    </td>
-                </tr>
-                <tr>
                     <td>เครื่อง <span style="color:red">*</span></td>
                     <td>
                         <?= $form->field($model, 'BrnPos')
@@ -64,7 +37,7 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                     </td>
                 </tr>   
                 <tr>
-                    <td>สาเหตุ <span style="color:red">*</span></td>
+                    <td>ระบุจำนวนกี่อัน <span style="color:red">*</span></td>
                     <td>
                         <?= $form->field($model, 'BrnCause')
                             ->textArea()

@@ -65,6 +65,7 @@ class LoginController extends \yii\web\Controller
                         T_Branch.BrnCode=T_Cashier.CshBranch
                     WHERE
                         BrnCode='$UserBranch'
+                    ORDER BY T_Cashier.CshDatabaseServerAlone
                 ");
 
                 $query_branch->execute();

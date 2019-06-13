@@ -62,10 +62,483 @@ class RepairController extends Controller
                 return $this->render('_form_choice');
             } elseif ($_POST['brn_repair'] == 'computer') {
                 return $this->redirect(array('computer'));
+            } elseif ($_POST['brn_repair'] == 'harddisk') {
+                return $this->redirect(array('harddisk'));
+            } elseif ($_POST['brn_repair'] == 'bios') {
+                return $this->redirect(array('bios'));
+            } elseif ($_POST['brn_repair'] == 'ups') {
+                return $this->redirect(array('ups'));
+            } elseif ($_POST['brn_repair'] == 'tm') {
+                return $this->redirect(array('tm'));
+            } elseif ($_POST['brn_repair'] == 'magnetic') {
+                return $this->redirect(array('magnetic'));
+            } elseif ($_POST['brn_repair'] == 'scanner') {
+                return $this->redirect(array('scanner'));
+            } elseif ($_POST['brn_repair'] == 'cashdrawer') {
+                return $this->redirect(array('cashdrawer'));
+            } elseif ($_POST['brn_repair'] == 'cashbank') {
+                return $this->redirect(array('cashbank'));
+            } elseif ($_POST['brn_repair'] == 'monitor') {
+                return $this->redirect(array('monitor'));
+            } elseif ($_POST['brn_repair'] == 'keyboard') {
+                return $this->redirect(array('keyboard'));
+            } elseif ($_POST['brn_repair'] == 'mouse') {
+                return $this->redirect(array('mouse'));
+            } elseif ($_POST['brn_repair'] == 'powerstrip') {
+                return $this->redirect(array('powerstrip'));
+            } elseif ($_POST['brn_repair'] == 'router') {
+                return $this->redirect(array('router'));
+            } elseif ($_POST['brn_repair'] == 'voice') {
+                return $this->redirect(array('voice'));
+            } elseif ($_POST['brn_repair'] == 'switch') {
+                return $this->redirect(array('switch'));
+            } elseif ($_POST['brn_repair'] == 'other') {
+                return $this->redirect(array('other'));
             }
         } else {
             return $this->render('_form_choice');
         }
+    }
+
+    public function actionOther()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'other';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('other', [
+                'model' => $model,
+                'title' => 'รายการอื่นๆ'
+            ]);
+        }
+                    
+    }
+
+    public function actionSwitch()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'switch';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "Switch";
+            $model->BrnStatus = "แจ้งซ่อม";
+            $model->BrnPos = 'ADSL';
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('switch', [
+                'model' => $model,
+                'title' => 'Switch'
+            ]);
+        }
+                    
+    }
+
+    public function actionVoice()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'voice';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "Voice";
+            $model->BrnStatus = "แจ้งซ่อม";
+            $model->BrnPos = 'ADSL';
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('voice', [
+                'model' => $model,
+                'title' => 'Voice'
+            ]);
+        }
+                    
+    }
+
+    public function actionRouter()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'router';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "Router";
+            $model->BrnStatus = "แจ้งซ่อม";
+            $model->BrnPos = 'ADSL';
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('router', [
+                'model' => $model,
+                'title' => 'Router'
+            ]);
+        }
+                    
+    }
+
+    public function actionPowerstrip()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'powerstrip';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "รางปลั๊กไฟ";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('powerstrip', [
+                'model' => $model,
+                'title' => 'รางปลั๊กไฟ'
+            ]);
+        }
+                    
+    }
+
+    public function actionMouse()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'mouse';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "เมาส์";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('mouse', [
+                'model' => $model,
+                'title' => 'เมาส์'
+            ]);
+        }
+                    
+    }
+
+    public function actionKeyboard()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'keyboard';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "คีย์บอร์ด";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('keyboard', [
+                'model' => $model,
+                'title' => 'คีย์บอร์ด'
+            ]);
+        }
+                    
+    }
+
+    public function actionMonitor()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'monitor';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "จอภาพ";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('monitor', [
+                'model' => $model,
+                'title' => 'จอภาพ'
+            ]);
+        }
+                    
+    }
+
+    public function actionCashbank()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'cashbank';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "ที่หนีบธนบัตร";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('cashbank', [
+                'model' => $model,
+                'title' => 'ที่หนีบธนบัตร'
+            ]);
+        }
+                    
+    }
+
+    public function actionCashdrawer()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'cashdrawer';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "ลิ้นชักเงินสด";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('cashdrawer', [
+                'model' => $model,
+                'title' => 'ลิ้นชักเงินสด'
+            ]);
+        }
+                    
+    }
+
+    public function actionScanner()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'scanner';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "สแกนเนอร์";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('scanner', [
+                'model' => $model,
+                'title' => 'สแกนเนอร์'
+            ]);
+        }
+                    
+    }
+
+    public function actionMagnetic()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'magnetic';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "เครื่องรูดบัตร";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('magnetic', [
+                'model' => $model,
+                'title' => 'เครื่องรูดบัตร'
+            ]);
+        }
+                    
+    }
+
+    public function actionTm()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'tm';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "เครื่องพิมพ์ใบเสร็จ";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('tm', [
+                'model' => $model,
+                'title' => 'เครื่องพิมพ์ใบเสร็จ'
+            ]);
+        }
+                    
+    }
+
+    public function actionUps()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'ups';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "เครื่องสำรองไฟ";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('ups', [
+                'model' => $model,
+                'title' => 'เครื่องสำรองไฟ'
+            ]);
+        }
+                    
+    }
+
+    public function actionBios()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'bios';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "แบตเตอรี่ เมนบอร์ด";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('bios', [
+                'model' => $model,
+                'title' => 'แบตเตอรี่ เมนบอร์ด'
+            ]);
+        }
+                    
+    }
+
+    public function actionHarddisk()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'harddisk';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "ฮาร์ดดิสก์";
+            $model->BrnStatus = "แจ้งซ่อม";
+            if(strlen($model->BrnPos) == 8){
+                $model->BrnPos = substr($model->BrnPos,5,3);
+            }
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('harddisk', [
+                'model' => $model,
+                'title' => 'ฮาร์ดดิสก์'
+            ]);
+        }
+                    
     }
 
     public function actionComputer()

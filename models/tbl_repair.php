@@ -46,10 +46,23 @@ class tbl_repair extends \yii\db\ActiveRecord
     {
         return [
             //computer
-            [
-                ['BrnBrand','BrnModel','BrnSerial','BrnPos','BrnCause'], 
-                    'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'computer'
-            ],
+            [['BrnBrand','BrnPos','BrnCause','BrnSerial'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'computer'],
+            [['BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'harddisk'],
+            [['BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'bios'],
+            [['BrnBrand','BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'ups'],
+            [['BrnPos','BrnCause','BrnSerial'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'tm'],
+            [['BrnBrand','BrnPos','BrnCause','BrnSerial'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'magnetic'],
+            [['BrnBrand','BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'scanner'],
+            [['BrnBrand','BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'cashdrawer'],
+            [['BrnPos'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'cashbank'],
+            [['BrnBrand','BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'monitor'],
+            [['BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'keyboard'],
+            [['BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'mouse'],
+            [['BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'powerstrip'],
+            [['BrnBrand','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'router'],
+            [['BrnBrand','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'voice'],
+            [['BrnBrand','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'switch'],
+            [['BrnRepair','BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'other'],
             //[['BrnStatus', 'BrnCode', 'BrnRepair', 'BrnPos', 'BrnBrand', 'BrnModel', 'BrnSerial', 'BrnCause', 'BrnUserCreate'], 'required'],
             [['CreatedAt', 'UpdatedAt'], 'safe'],
             [['BrnStatus', 'BrnCode', 'BrnPos'], 'string', 'max' => 100],
@@ -79,6 +92,7 @@ class tbl_repair extends \yii\db\ActiveRecord
     {
         $model = tbl_repair::find()
                     ->where(['BrnCode' => Yii::$app->session->get('UserBranch')])
+                    ->orderBy(['id' => SORT_DESC])
                     ->all();
         return $model;
     }
@@ -122,12 +136,12 @@ class tbl_repair extends \yii\db\ActiveRecord
             $session->set('BrnPos', $this->BrnPos);
             $session->set('BrnUserCreate', $this->BrnUserCreate);            
 
-            \Yii::$app->getSession()->setFlash('saveRepairOk', 'บันทึกข้อมูลแจ้งซ่อม '.$this->BrnRepair.' เรียบร้อย');
+            \Yii::$app->getSession()->setFlash('saveRepairOk', 'บันทึกแจ้งซ่อม '.$this->BrnRepair.' เรียบร้อย');
             
             $pos = $this->BrnPos;
             $repair = $this->BrnRepair;
             
-            $this->sendMail($pos,$repair);
+            //$this->sendMail($pos,$repair);
         }
         /*
         else {

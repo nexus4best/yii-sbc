@@ -6,14 +6,14 @@ use yii\helpers\ArrayHelper;
 
 $session = Yii::$app->session;
 $CshDatabaseServerAlone = $session->get('CshDatabaseServerAlone');
-$CshDatabaseServerAlone += ["CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
-//$CshDatabaseServerAlone += [ "ADSL" => "ADSL", "CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
+//$CshDatabaseServerAlone += ["BackOffice" => "BackOffice" ];
+$CshDatabaseServerAlone += [ "ADSL" => "ADSL", "CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
 
-$this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
+$this->title = 'แจ้งซ่อม-Switch';
 
 ?>
 <div class="container">
-    <div class="tbl-repair-computer">
+    <div class="tbl-repair-switch">
 
         <?php $form = ActiveForm::begin(); ?>
 
@@ -26,7 +26,7 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                             ->label(false) 
                         ?>
                     </td>
-                </tr>
+                </tr>  
                 <tr>
                     <td>ยี่ห้อ <span style="color:red">*</span></td>
                     <td>
@@ -46,7 +46,7 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                     </td>
                 </tr> 
                 <tr>
-                    <td>หมายเลข <span style="color:red">*</span></td>
+                    <td>หมายเลข</span></td>
                     <td>
                         <?= $form->field($model, 'BrnSerial')
                             ->textInput()
@@ -54,15 +54,6 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                         ?>
                     </td>
                 </tr>
-                <tr>
-                    <td>เครื่อง <span style="color:red">*</span></td>
-                    <td>
-                        <?= $form->field($model, 'BrnPos')
-                            ->dropDownList($CshDatabaseServerAlone, ['prompt'=>''])
-                            ->label(false);
-                        ?>
-                    </td>
-                </tr>   
                 <tr>
                     <td>สาเหตุ <span style="color:red">*</span></td>
                     <td>

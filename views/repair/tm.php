@@ -6,14 +6,14 @@ use yii\helpers\ArrayHelper;
 
 $session = Yii::$app->session;
 $CshDatabaseServerAlone = $session->get('CshDatabaseServerAlone');
-$CshDatabaseServerAlone += ["CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
+//$CshDatabaseServerAlone += ["ADSL" => "ADSL", "CCTV" => "CCTV","BackOffice" => "BackOffice" ];
 //$CshDatabaseServerAlone += [ "ADSL" => "ADSL", "CCTV" => "CCTV", "BackOffice" => "BackOffice" ];
 
-$this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
+$this->title = 'แจ้งซ่อม-เครื่องพิมพ์ใบเสร็จ';
 
 ?>
 <div class="container">
-    <div class="tbl-repair-computer">
+    <div class="tbl-repair-ups">
 
         <?php $form = ActiveForm::begin(); ?>
 
@@ -28,10 +28,10 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                     </td>
                 </tr>
                 <tr>
-                    <td>ยี่ห้อ <span style="color:red">*</span></td>
+                    <td>ยี่ห้อ</td>
                     <td>
                         <?= $form->field($model, 'BrnBrand')
-                            ->textInput()
+                            ->textInput(['value' => 'EPSON'])
                             ->label(false) 
                         ?>
                     </td>
@@ -40,7 +40,7 @@ $this->title = 'แจ้งซ่อม-คอมพิวเตอร์';
                     <td>รุ่น</td>
                     <td>
                         <?= $form->field($model, 'BrnModel')
-                            ->textInput()
+                            ->textInput(['value' => 'T82'])
                             ->label(false) 
                         ?>
                     </td>
