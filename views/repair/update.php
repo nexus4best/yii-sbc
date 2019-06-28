@@ -6,16 +6,18 @@ use yii\helpers\Html;
 /* @var $model app\models\tbl_repair */
 
 $this->title = 'Update Tbl Repair: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Tbl Repairs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="tbl-repair-update">
+<div class="container">
+    <div class="tbl-repair-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <?= 'เลขที่ '.$model->id.' แจ้งซ่อม '.$model->BrnRepair.
+            ' วันที่ '.substr($model->CreatedAt,8,2).'/'.substr($model->CreatedAt,5,2).'/'.substr($model->CreatedAt,2,2).
+            ' ส่งของ '.substr($model->send->CreatedAt,8,2).'/'.substr($model->send->CreatedAt,5,2).'/'.substr($model->send->CreatedAt,2,2); ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+        <?= $this->render('_form', [
+            'model' => $model,
+            'model_comment' => $model_comment,
+        ]) ?>
 
+    </div>
 </div>

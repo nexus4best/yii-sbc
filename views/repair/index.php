@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Html;
 
 $this->title = 'หน้าหลัก-ใบแจ้งซ่อม';
 ?>
@@ -31,11 +32,17 @@ $this->title = 'หน้าหลัก-ใบแจ้งซ่อม';
                 echo '<tr><td><a href="view/'.$value->id.'">'.$value->id.'</a></td>';
                 if($value->BrnStatus == 'แจ้งซ่อม'){
                     echo '<td><span style="color:red">'.$value->BrnStatus.'</span>'.'</td>';
+                }elseif($value->BrnStatus == 'ส่งของ'){
+                    $url = Yii::$app->urlManager->createUrl(['repair/update','id'=>$value->id]);
+                    $x = Html::a('คลิกรับของ', $url, ['title'=> 'คลิกรับของ เมื่อของถึงสาขา']);
+                    echo '<td><span">'.$x.'</span>'.'</td>';
+                }else{
+                    echo '<td><span">'.$value->BrnStatus.'</span>'.'</td>';
                 }
                 echo '<td>'.$value->BrnRepair.'</td>';
                 echo '<td>'.$value->BrnPos.'</td>';
                 echo '<td>'.substr($value->CreatedAt,8,2).'/'.substr($value->CreatedAt,5,2).'/'.substr($value->CreatedAt,2,2).'</td>';
-                echo '<td>'.$value->BrnUserCreate.'</td></tr>';
+                echo '<td>'.$value->BrnCreateByName.'</td></tr>';
             }
 
         ?>

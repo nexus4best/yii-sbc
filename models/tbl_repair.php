@@ -8,21 +8,6 @@ use yii\db\Expression;
 use yii\web\Session;
 use app\models\tbl_zone;
 
-/* branch create repair
- * @property int $id
- * @property string $BrnStatus
- * @property string $BrnCode
- * @property string $BrnRepair
- * @property string $BrnPos
- * @property string $BrnBrand
- * @property string $BrnModel
- * @property string $BrnSerial
- * @property string $BrnCause
- * @property string $BrnUserCreate
- * @property string $created_at
- * @property string $updated_at
- */
-
 class tbl_repair extends \yii\db\ActiveRecord
 {
     public function behaviors()
@@ -46,6 +31,7 @@ class tbl_repair extends \yii\db\ActiveRecord
     {
         return [
             //computer
+            [['BrnSerial','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'ricoh'],
             [['BrnBrand','BrnPos','BrnCause','BrnSerial'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'computer'],
             [['BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'harddisk'],
             [['BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'bios'],
@@ -63,10 +49,10 @@ class tbl_repair extends \yii\db\ActiveRecord
             [['BrnBrand','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'voice'],
             [['BrnBrand','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'switch'],
             [['BrnRepair','BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'other'],
-            //[['BrnStatus', 'BrnCode', 'BrnRepair', 'BrnPos', 'BrnBrand', 'BrnModel', 'BrnSerial', 'BrnCause', 'BrnUserCreate'], 'required'],
+            [['BrnStatus'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'update'],
             [['CreatedAt', 'UpdatedAt'], 'safe'],
             [['BrnStatus', 'BrnCode', 'BrnPos'], 'string', 'max' => 100],
-            [['BrnRepair', 'BrnBrand', 'BrnModel', 'BrnSerial', 'BrnCause', 'BrnUserCreate'], 'string', 'max' => 255],
+            [['BrnRepair', 'BrnBrand', 'BrnModel', 'BrnSerial', 'BrnCause', 'BrnCreateByName'], 'string', 'max' => 255],
         ];
     }
 
@@ -82,11 +68,23 @@ class tbl_repair extends \yii\db\ActiveRecord
             'BrnModel' => 'รุ่น',
             'BrnSerial' => 'หมายเลข',
             'BrnCause' => 'สาเหตุ',
-            'BrnUserCreate' => 'ผู้จัดทำ',
+            'BrnCreateByName' => 'ผู้จัดทำ',
             'CreatedAt ' => 'วันที่สร้าง',
             'UpdatedAt ' => 'UpdatedAt',
         ];
     }
+
+    // Start Relation
+    public function getSend()
+    {
+        return $this->hasOne(tbl_send::className(), ['id' => 'id']);
+    }
+
+    public function getComment()
+    {
+        return $this->hasOne(tbl_comment::className(), ['id' => 'id']);
+    }
+    // End Relation
 
     public static function getAll()
     {
@@ -134,7 +132,7 @@ class tbl_repair extends \yii\db\ActiveRecord
             $session->set('BrnSerial', $this->BrnSerial);
             $session->set('BrnCause', $this->BrnCause);            
             $session->set('BrnPos', $this->BrnPos);
-            $session->set('BrnUserCreate', $this->BrnUserCreate);            
+            $session->set('BrnCreateByName', $this->BrnCreateByName);            
 
             \Yii::$app->getSession()->setFlash('saveRepairOk', 'บันทึกแจ้งซ่อม '.$this->BrnRepair.' เรียบร้อย');
             

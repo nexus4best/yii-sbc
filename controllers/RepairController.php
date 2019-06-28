@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\tbl_comment;
+use app\models\tbl_send;
 use app\models\tbl_repair;
 use app\models\tbl_repair_search;
 use yii\web\Controller;
@@ -94,10 +96,39 @@ class RepairController extends Controller
                 return $this->redirect(array('switch'));
             } elseif ($_POST['brn_repair'] == 'other') {
                 return $this->redirect(array('other'));
+            }elseif ($_POST['brn_repair'] == 'ricoh') {
+                return $this->redirect(array('ricoh'));
             }
         } else {
             return $this->render('_form_choice');
         }
+    }
+
+    public function actionRicoh()
+    {
+        $this->layout = 'mainRepair';
+        $model = new tbl_repair();
+        $model->scenario = 'ricoh';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            
+            $model->BrnCode = Yii::$app->session->get('UserBranch');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
+            $model->BrnRepair = "Laser Ricoh";
+            $model->BrnStatus = "แจ้งซ่อม";
+            $model->BrnPos = "C01";
+ 
+
+            $model->save();
+            
+            return $this->redirect('index');
+        } else {
+            return $this->render('ricoh', [
+                'model' => $model,
+                'title' => 'Laser Ricoh'
+            ]);
+        }
+                    
     }
 
     public function actionOther()
@@ -109,7 +140,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
                 $model->BrnPos = substr($model->BrnPos,5,3);
@@ -136,7 +167,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "Switch";
             $model->BrnStatus = "แจ้งซ่อม";
             $model->BrnPos = 'ADSL';
@@ -162,7 +193,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "Voice";
             $model->BrnStatus = "แจ้งซ่อม";
             $model->BrnPos = 'ADSL';
@@ -188,7 +219,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "Router";
             $model->BrnStatus = "แจ้งซ่อม";
             $model->BrnPos = 'ADSL';
@@ -214,7 +245,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "รางปลั๊กไฟ";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -242,7 +273,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "เมาส์";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -270,7 +301,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "คีย์บอร์ด";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -298,7 +329,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "จอภาพ";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -326,7 +357,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "ที่หนีบธนบัตร";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -354,7 +385,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "ลิ้นชักเงินสด";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -382,7 +413,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "สแกนเนอร์";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -410,7 +441,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "เครื่องรูดบัตร";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -438,7 +469,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "เครื่องพิมพ์ใบเสร็จ";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -466,7 +497,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "เครื่องสำรองไฟ";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -494,7 +525,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "แบตเตอรี่ เมนบอร์ด";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -522,7 +553,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "ฮาร์ดดิสก์";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -550,7 +581,7 @@ class RepairController extends Controller
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
-            $model->BrnUserCreate = Yii::$app->session->get('UserName');
+            $model->BrnCreateByName = Yii::$app->session->get('UserName');
             $model->BrnRepair = "คอมพิวเตอร์";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
@@ -569,45 +600,42 @@ class RepairController extends Controller
                     
     }
 
-
-
-    public function actionCreate()
-    {
-        $model = new tbl_repair();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
     public function actionUpdate($id)
     {
+        $this->layout = 'mainRepair';
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        $model->scenario = 'update';
+        $model_comment = new tbl_comment;
+        if($model->load(Yii::$app->request->post()) && $model->validate() && $model_comment->load(Yii::$app->request->post()) && $model_comment->validate()){ 
+            
+            $model->save();
+        
+            $model_comment->MessageByName = Yii::$app->session->get('UserName');
+            $model_comment->id = $model->id;
+            $model_comment->save();
+            
+            return $this->redirect(array('index'));
+        }   
 
         return $this->render('update', [
             'model' => $model,
+            'model_comment' => $model_comment,
         ]);
-    }
-
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     protected function findModel($id)
     {
         if (($model = tbl_repair::findOne($id)) !== null) {
             return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModelSend($id)
+    {
+        if (($model_send = tbl_send::findOne($id)) !== null) {
+            return $model_send;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');

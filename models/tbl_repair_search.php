@@ -6,38 +6,26 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\tbl_repair;
 
-/**
- * tbl_repair_search represents the model behind the search form of `app\models\tbl_repair`.
- */
+
 class tbl_repair_search extends tbl_repair
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function rules()
     {
         return [
             [['id'], 'integer'],
-            [['BrnStatus', 'BrnCode', 'BrnRepair', 'BrnPos', 'BrnBrand', 'BrnModel', 'BrnSerial', 'BrnCause', 'BrnUserCreate', 'CreatedAt', 'UpdatedAt'], 'safe'],
+            [['BrnStatus', 'BrnCode', 'BrnRepair', 'BrnPos', 'BrnBrand', 'BrnModel', 'BrnSerial', 'BrnCause', 
+                'BrnCreateByName', 'CreatedAt', 'UpdatedAt'], 'safe'],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
     public function search($params)
     {
         $query = tbl_repair::find();
@@ -71,7 +59,7 @@ class tbl_repair_search extends tbl_repair
             ->andFilterWhere(['like', 'BrnModel', $this->BrnModel])
             ->andFilterWhere(['like', 'BrnSerial', $this->BrnSerial])
             ->andFilterWhere(['like', 'BrnCause', $this->BrnCause])
-            ->andFilterWhere(['like', 'BrnUserCreate', $this->BrnUserCreate]);
+            ->andFilterWhere(['like', 'BrnCreateByName', $this->BrnCreateByName]);
 
         return $dataProvider;
     }

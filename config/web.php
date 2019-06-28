@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'th',
     'timeZone' => 'Asia/Bangkok',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
