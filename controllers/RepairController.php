@@ -114,7 +114,7 @@ class RepairController extends Controller
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
             $model->BrnCreateByName = Yii::$app->session->get('UserName');
-            $model->BrnRepair = "Laser Ricoh";
+            $model->BrnRepair = "Laser RICOH";
             $model->BrnStatus = "แจ้งซ่อม";
             $model->BrnPos = "C01";
  
@@ -526,7 +526,7 @@ class RepairController extends Controller
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
             $model->BrnCreateByName = Yii::$app->session->get('UserName');
-            $model->BrnRepair = "แบตเตอรี่ เมนบอร์ด";
+            $model->BrnRepair = "คอมพิวเตอร์-แบตเตอรี่ เมนบอร์ด";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
                 $model->BrnPos = substr($model->BrnPos,5,3);
@@ -538,7 +538,7 @@ class RepairController extends Controller
         } else {
             return $this->render('bios', [
                 'model' => $model,
-                'title' => 'แบตเตอรี่ เมนบอร์ด'
+                'title' => 'คอมพิวเตอร์ - แบตเตอรี่ เมนบอร์ด'
             ]);
         }
                     
@@ -554,7 +554,7 @@ class RepairController extends Controller
             
             $model->BrnCode = Yii::$app->session->get('UserBranch');
             $model->BrnCreateByName = Yii::$app->session->get('UserName');
-            $model->BrnRepair = "ฮาร์ดดิสก์";
+            $model->BrnRepair = "คอมพิวเตอร์-ฮาร์ดดิสก์";
             $model->BrnStatus = "แจ้งซ่อม";
             if(strlen($model->BrnPos) == 8){
                 $model->BrnPos = substr($model->BrnPos,5,3);
@@ -566,7 +566,7 @@ class RepairController extends Controller
         } else {
             return $this->render('harddisk', [
                 'model' => $model,
-                'title' => 'ฮาร์ดดิสก์'
+                'title' => 'คอมพิวเตอร์ - ฮาร์ดดิสก์'
             ]);
         }
                     

@@ -21,8 +21,32 @@ $this->title = 'แจ้งซ่อม-แบตเตอรี่ เมน�
                 <tr>
                     <td>แจ้งซ่อม</td>
                     <td>
-                        <?= $form->field($model, 'BrnRepair')
-                            ->textInput(['value' => $title, 'readonly' => 'readonly', 'style' => 'background:#FFFF88'])
+                        <?= '<span style="background:#FFFF88">'.$title.'</span>' ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ยี่ห้อ <span style="color:red">*</span></td>
+                    <td>
+                        <?= $form->field($model, 'BrnBrand')
+                            ->textInput()
+                            ->label(false) 
+                        ?>
+                    </td>
+                </tr>   
+                <tr>
+                    <td>รุ่น</td>
+                    <td>
+                        <?= $form->field($model, 'BrnModel')
+                            ->textInput()
+                            ->label(false) 
+                        ?>
+                    </td>
+                </tr> 
+                <tr>
+                    <td>หมายเลข <span style="color:red">*</span></td>
+                    <td>
+                        <?= $form->field($model, 'BrnSerial')
+                            ->textInput()
                             ->label(false) 
                         ?>
                     </td>

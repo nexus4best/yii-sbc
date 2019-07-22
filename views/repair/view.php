@@ -3,7 +3,7 @@
 ?>
 
     <?php
-    if($model->BrnRepair == 'Laser Ricoh'){ 
+    if($model->BrnRepair == 'Laser RICOH'){ 
         if($model->BrnStatus == 'แจ้งซ่อม'){ ?>
             <div class="container">
                     <table cellspacing="1" cellpadding="1">   
@@ -62,7 +62,10 @@
                             <td>วันที่แจ้งซ่อม</td>
                             <td><?= $model->CreatedAt.' '.$model->BrnCreateByName; ?></td>
                         </tr>  
-                     
+                        <tr>
+                            <td>วันที่ SendMail</td>
+                            <td><?= $model->AcceptAt; ?></td>
+                        </tr>  
                     </table>
             </div> 
             <?php
@@ -96,19 +99,23 @@
                         </tr>  
                         <tr>
                             <td>วันที่ SendMail</td>
-                            <td><?= $model->UserAcceptAt; ?></td>
+                            <td><?= $model->AcceptAt; ?></td>
+                        </tr>   
+                        <tr>
+                            <td>วันที่เปิด Job</td>
+                            <td><?= $model->ricoh->UpdatedAt.' '.$model->ricoh->OpenJobByName; ?></td>
                         </tr>  
                         <tr>
                             <td>Job</td>
-                            <td><?= $model->UpdatedAt.' '.$model->RicohJob.' '.$model->UserAccept; ?></td>
-                        </tr>                      
+                            <td><?= $model->ricoh->OpenJob; ?></td>
+                        </tr>                   
                     </table>
             </div>             
         <?php
         }elseif($model->BrnStatus == 'ลบ'){
         ?>
             <div class="container">
-                    <table border='1'>   
+                    <table cellspacing="1" cellpadding="1">   
                         <tr>
                             <td width="120px">เลขที่</td>
                             <td><?= $model->id; ?></td>
@@ -130,20 +137,24 @@
                             <td><?= $model->BrnCause; ?></td>
                         </tr>
                         <tr>
-                            <td>Job</td>
-                            <td><?= $model->RicohJob; ?></td>
-                        </tr>
-                        <tr>
                             <td>วันที่แจ้งซ่อม</td>
                             <td><?= $model->CreatedAt.' '.$model->BrnCreateByName; ?></td>
-                        </tr>                         
+                        </tr>   
+                        <tr>
+                            <td>วันที่ลบ</td>
+                            <td><?= $model->UpdatedAt.' '.$model->DeleteByName; ?></td>
+                        </tr>     
+                        <tr>
+                            <td>สาเหตุที่ลบ</td>
+                            <td><?= $model->DeleteCause; ?></td>
+                        </tr>                       
                     </table>
             </div> 
         <?php
         }elseif($model->BrnStatus == 'เรียบร้อย'){
         ?>
             <div class="container">
-                    <table cellspacing="5" cellpadding="5">   
+                    <table cellspacing="1" cellpadding="1">   
                         <tr>
                             <td width="120px">เลขที่</td>
                             <td><?= $model->id; ?></td>
@@ -167,7 +178,23 @@
                         <tr>
                             <td>วันที่แจ้งซ่อม</td>
                             <td><?= $model->CreatedAt.' '.$model->BrnCreateByName; ?></td>
-                        </tr>                      
+                        </tr>     
+                        <tr>
+                            <td>วันที่รับเรื่อง</td>
+                            <td><?= $model->ricoh->UpdatedAt.' '.$model->ricoh->OpenJobByName; ?></td>
+                        </tr>  
+                        <tr>
+                            <td>Job</td>
+                            <td><?= $model->ricoh->OpenJob; ?></td>
+                        </tr>    
+                        <tr>
+                            <td>วันที่คลิกรับของ</td>
+                            <td><?= $model->comment->CreatedAt.' '.$model->comment->MessageByName; ?></td>
+                        </tr>  
+                        <tr>
+                            <td>ข้อเสนอแนะ</td>
+                            <td><?= $model->comment->Message; ?></td>
+                        </tr>                 
                     </table>
             </div> 
         <?php
@@ -326,7 +353,7 @@
                 </tr>  
                 <tr>
                     <td>&nbsp;</td>
-                    <td><span style="color:blue"> * </span>สีน้ำเงินคืออรายละเอียดอุปกรณ์ จัดส่งให้สาขา</td>
+                    <td><span style="color:blue"> * </span>สีน้ำเงินคือรายละเอียดอุปกรณ์ จัดส่งให้สาขา</td>
                 </tr>                  
             </table>
         </div>  
@@ -396,7 +423,7 @@
                 </tr>  
                 <tr>
                     <td>&nbsp;</td>
-                    <td><span style="color:blue"> * </span>สีน้ำเงินคืออรายละเอียดอุปกรณ์ จัดส่งให้สาขา</td>
+                    <td><span style="color:blue"> * </span>สีน้ำเงินคือรายละเอียดอุปกรณ์ จัดส่งให้สาขา</td>
                 </tr>                  
             </table>
         </div>  

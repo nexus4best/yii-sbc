@@ -10,9 +10,17 @@ $this->title = 'Update Tbl Repair: ' . $model->id;
 <div class="container">
     <div class="tbl-repair-update">
 
-        <?= 'เลขที่ '.$model->id.' แจ้งซ่อม '.$model->BrnRepair.
-            ' วันที่ '.substr($model->CreatedAt,8,2).'/'.substr($model->CreatedAt,5,2).'/'.substr($model->CreatedAt,2,2).
-            ' ส่งของ '.substr($model->send->CreatedAt,8,2).'/'.substr($model->send->CreatedAt,5,2).'/'.substr($model->send->CreatedAt,2,2); ?>
+    <?php
+
+        if($model->BrnRepair=='Laser RICOH'){
+            echo 'เลขที่ '.$model->id.' แจ้งซ่อม '.$model->BrnRepair.
+            ' วันที่ '.substr($model->CreatedAt,8,2).'/'.substr($model->CreatedAt,5,2).'/'.substr($model->CreatedAt,2,2);
+        }else{
+            echo 'เลขที่ '.$model->id.' แจ้งซ่อม '.$model->BrnRepair.
+            ' ส่งของ '.substr($model->send->CreatedAt,8,2).'/'.substr($model->send->CreatedAt,5,2).'/'.substr($model->send->CreatedAt,2,2);
+        }
+
+    ?>
 
         <?= $this->render('_form', [
             'model' => $model,
@@ -21,3 +29,4 @@ $this->title = 'Update Tbl Repair: ' . $model->id;
 
     </div>
 </div>
+

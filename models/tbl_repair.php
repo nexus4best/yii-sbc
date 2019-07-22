@@ -33,8 +33,8 @@ class tbl_repair extends \yii\db\ActiveRecord
             //computer
             [['BrnSerial','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'ricoh'],
             [['BrnBrand','BrnPos','BrnCause','BrnSerial'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'computer'],
-            [['BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'harddisk'],
-            [['BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'bios'],
+            [['BrnBrand','BrnPos','BrnCause','BrnSerial'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'harddisk'],
+            [['BrnBrand','BrnPos','BrnCause','BrnSerial'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'bios'],
             [['BrnBrand','BrnPos','BrnCause'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'ups'],
             [['BrnPos','BrnCause','BrnSerial'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'tm'],
             [['BrnBrand','BrnPos','BrnCause','BrnSerial'],'required', 'message' => 'โปรดระบุ{attribute}', 'on' => 'magnetic'],
@@ -84,6 +84,11 @@ class tbl_repair extends \yii\db\ActiveRecord
     {
         return $this->hasOne(tbl_comment::className(), ['id' => 'id']);
     }
+
+    public function getRicoh()
+    {
+        return $this->hasOne(tbl_ricoh::className(), ['id' => 'id']);
+    }
     // End Relation
 
     public static function getAll()
@@ -93,6 +98,37 @@ class tbl_repair extends \yii\db\ActiveRecord
                     ->orderBy(['id' => SORT_DESC])
                     ->all();
         return $model;
+    }
+
+    public function sendLine()
+    {
+        $session = Yii::$app->session;
+
+        if($session->get('BrnRepair')=='Laser Ricoh'){
+            $message = ' ทดสอบระบบ '.$session->get('UserBranch').' '.$session->get('BrnName').' แจ้งซ่อม '.$session->get('BrnRepair').
+            ' สาเหตุ '.$session->get('BrnCause').' SN '.$session->get('BrnSerial').' จัดทำโดยคุณ'.$session->get('BrnCreateByName');
+        }else{
+            $message = ' ทดสอบระบบ '.$session->get('UserBranch').' '.$session->get('BrnName').' แจ้งซ่อม '.$session->get('BrnRepair').' เครื่อง '.$session->get('BrnPos').
+            ' สาเหตุ '.$session->get('BrnCause').' จัดทำโดยคุณ'.$session->get('BrnCreateByName');
+        }
+        
+
+        $line_api = 'https://notify-api.line.me/api/notify';
+        $line_token = 'slxDfZ7HKD9lOcTZa7yHhCClItl3HMvvRmqOlD9wcbT';
+
+        $queryData = array('message' => $message);
+        $queryData = http_build_query($queryData,'','&');
+        $headerOptions = array(
+            'http'=>array(
+                'method'=>'POST',
+                'header'=> "Content-Type: application/x-www-form-urlencoded\r\n"
+                    ."Authorization: Bearer ".$line_token."\r\n"
+                    ."Content-Length: ".strlen($queryData)."\r\n",
+                'content' => $queryData
+            )
+        );
+        $context = stream_context_create($headerOptions);
+        $result = file_get_contents($line_api, FALSE, $context);          
     }
 
     public function sendMail($pos,$repair)
@@ -115,6 +151,7 @@ class tbl_repair extends \yii\db\ActiveRecord
             'repairing@se-ed.com' => 'แจ้งซ่อม ONLINE'
         ])
         ->setTo(array($mail_to,$mail_area))
+        //->setTo('thanee@se-ed.com')
         ->setSubject($mail_subject)
         ->send();
     }
@@ -139,7 +176,9 @@ class tbl_repair extends \yii\db\ActiveRecord
             $pos = $this->BrnPos;
             $repair = $this->BrnRepair;
             
-            //$this->sendMail($pos,$repair);
+            /* Mail Line Open Close */
+            $this->sendMail($pos,$repair);
+            $this->sendLine();
         }
         /*
         else {
